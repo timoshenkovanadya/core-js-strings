@@ -40,6 +40,7 @@ function getStringLength(value) {
  */
 function isString(value) {
   if (typeof value === 'string') return true;
+  if (value instanceof String) return true;
   return false;
 }
 
@@ -73,7 +74,7 @@ function concatenateStrings(value1, value2) {
  *   getFirstChar('') => ''
  */
 function getFirstChar(value) {
-  return value.at(0);
+  return value.charAt(0);
 }
 
 /**
@@ -153,9 +154,8 @@ function repeatString(str, times) {
  */
 function removeFirstOccurrences(str, value) {
   const result = str.indexOf(value);
-  const len = value.length - 1;
   if (result === -1) return str;
-  return str.slice(result, len);
+  return str.replace(value, '');
 }
 
 /**
@@ -174,7 +174,13 @@ function removeLastOccurrences(str, value) {
   const result = str.lastIndexOf(value);
   const len = value.length - 1;
   if (result === -1) return str;
-  return str.slice(result, len);
+  let final = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (i < result || i > result + len) {
+      final += str[i];
+    }
+  }
+  return final;
 }
 
 /**
