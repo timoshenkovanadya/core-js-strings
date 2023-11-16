@@ -323,7 +323,7 @@ function countVowels(str) {
   const Vowels = 'aeiouAEIOU';
   let vcount = 0;
 
-  for (let x = 0; x < str.length; x + 1) {
+  for (let x = 0; x < str.length; x += 1) {
     if (Vowels.indexOf(str[x]) !== -1) {
       vcount += 1;
     }
@@ -366,7 +366,7 @@ function findLongestWord(sentence) {
   const words = sentence.split(' ');
   const longest = 0;
   let result = '';
-  for (let i = 0; i < words.length; i + 1) {
+  for (let i = 0; i < words.length; i += 1) {
     if (words[i].length > longest) {
       result = words[i];
     }
