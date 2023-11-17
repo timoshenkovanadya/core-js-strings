@@ -503,11 +503,20 @@ function extractEmails(str) {
  *
  */
 function encodeToRot13(str) {
-  const string = str.split('');
+  const isCorrectCharCode = (string) =>
+    (string >= 65 && string <= 90) || (string >= 97 && string <= 122);
   let result = '';
-  for (let i = 0; i < string.length; i += 1) {
-    result = result.replace(string.charCodeAt(i), string.charCodeAt(i + 13));
-    result += 1;
+  for (let i = 0; i < str.length; i += 1) {
+    const startIndex = str.charCodeAt(i);
+    if (isCorrectCharCode(startIndex)) {
+      let newIndex = startIndex + 13;
+      if (!isCorrectCharCode(newIndex) || (newIndex >= 97 && startIndex < 97)) {
+        newIndex -= 26;
+      }
+      result += String.fromCharCode(newIndex);
+    } else {
+      result += str[i];
+    }
   }
   return result;
 }
@@ -537,7 +546,26 @@ function encodeToRot13(str) {
  *   'K♠' => 51
  */
 function getCardId(value) {
- 
+  const typesArr = [
+    'A',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    'J',
+    'Q',
+    'K',
+  ];
+  const learsArr = ['♣', '♦', '♥', '♠'];
+  const type = value.slice(0, -1);
+  const lear = value.slice(-1);
+  const result = learsArr.indexOf(lear) * 13 + typesArr.indexOf(type);
+  return result;
 }
 
 module.exports = {
